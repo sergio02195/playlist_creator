@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: pc-core
+      POSTGRES_DB: playlist-database
+    ports:
+      - 5432:5432
+  cache:
+    image: redis:latest
+    ports:
+      - 6379:6379
+  load-balance:
+    image: nginx:latest
+    ports:
+      - 80:80
+  queue:
+    image: rabbitmq:management
+    ports:
+      - 15672:15672
+  app:
+    build: .
+    ports:
+      - 8000:8000
