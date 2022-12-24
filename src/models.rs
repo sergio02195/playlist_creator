@@ -1,4 +1,4 @@
-use deadpool_lapin::{PoolError};
+use deadpool_lapin::{PoolError, lapin};
 use serde::{Serialize, Deserialize};
 use std::result::Result as StdResult;
 use thiserror::Error as ThisError;
