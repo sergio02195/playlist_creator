@@ -14,15 +14,15 @@ use tokio_amqp::*;
 pub struct RabbitMQClient {
     queue: String,
     addr: String,
-    // manager: Manager
+    callback: F
 }
 
 impl RabbitMQClient {
-    pub fn new(addr: String, queue: String) -> Self {
+    pub fn new(addr: String, queue: String, callback_fn: F) -> Self {
         Self {
             queue: queue,
             addr: addr,
-            // manager: Manager::new(addr, ConnectionProperties::default()),
+            callback: callback_fn
         }
     }
 
@@ -88,6 +88,7 @@ impl RabbitMQClient {
                 };
             
                 println!("result: {}", s);
+                &self.callback(s)
                 channel
                     .basic_ack(delivery.delivery_tag, BasicAckOptions::default())
                     .await?

@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use std::result::Result as StdResult;
 use thiserror::Error as ThisError;
 use warp::{Rejection};
-// use chrono::DateTime;
+use chrono::{DateTime, Utc};
 
 #[derive(Serialize,Deserialize)]
 pub struct User {
@@ -11,11 +11,11 @@ pub struct User {
     pub name: String,
 }
 
-// #[derive(Serialize,Deserialize)]
-// pub struct StartData {
-//     pub origin: DateTime,
-//     pub token: String,
-// }
+#[derive(Serialize,Deserialize)]
+pub struct StartData {
+    pub origin: DateTime<Utc>,
+    pub token: String,
+}
 
 pub type WebResult<T> = StdResult<T, Rejection>;
 pub type RMQResult<T> = StdResult<T, PoolError>;
