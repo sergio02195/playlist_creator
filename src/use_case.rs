@@ -1,6 +1,7 @@
 
-async fn start_user(data: String) {
-    let parsed = json::parse(data)
+
+pub fn start_user(data: &str) {
+    let _parsed = json::parse(data);
     // save user
     // start tasks
 }

@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use deadpool_lapin::{PoolError, lapin};
 use serde::{Serialize, Deserialize};
 use std::result::Result as StdResult;
@@ -21,6 +22,8 @@ pub type WebResult<T> = StdResult<T, Rejection>;
 pub type RMQResult<T> = StdResult<T, PoolError>;
 pub type Result<T> = StdResult<T, Error>;
 
+pub type Callback = fn(&str);
+
 pub type Connection = deadpool::managed::Object<deadpool_lapin::Manager>;
 
 #[derive(ThisError, Debug)]
@@ -32,3 +35,8 @@ pub enum Error {
 }
 
 impl warp::reject::Reject for Error {}
+
+#[derive(Serialize,Deserialize)]
+pub struct SpotifyAuth {
+    pub code: String
+}

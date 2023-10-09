@@ -8,13 +8,18 @@ name = "core"
 path = "src/core.rs"
 
 [[bin]]
-name = "rest"
-path = "src/rest.rs"
+name = "rest-web"
+path = "src/rest_web.rs"
+
+[[bin]]
+name = "rest-api"
+path = "src/rest_api.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 actix-web = "4.1.0"
+actix-files = "0.6.2"
 chrono = "0.4.19"
 hyper = "0.14.20"
 keyring = "1.2.0"
@@ -30,3 +35,7 @@ futures = { version = "0.3.17", default-features = true }
 deadpool-lapin = "0.9.0"
 tokio-amqp = "1.0.0"
 thiserror = "1.0.30"
+json = "*"
+
+env_logger = "0.10"
+log = "0.4"

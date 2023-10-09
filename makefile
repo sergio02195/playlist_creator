@@ -1,14 +1,20 @@
 build-core:
 	@cargo build --bin core --release
 
-run-core:
-	@cargo run --bin core
-
 build-rest:
 	@cargo build --bin rest --release
 
-run-rest:
-	@cargo run --bin rest
+build-api:
+	@cargo build --bin api --release
+
+run-core:
+	@cargo run --bin core
+
+run-web:
+	@cargo run --bin rest-web
+
+run-api:
+	@cargo run --bin api
 
 lint:
 	@cargo clippy

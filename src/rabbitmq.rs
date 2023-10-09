@@ -1,4 +1,4 @@
-use crate::models::{Connection, RMQResult, Result};
+use crate::models::{Callback, Connection, RMQResult, Result};
 use deadpool_lapin::{
     lapin::{
         options::{BasicAckOptions, BasicConsumeOptions, QueueDeclareOptions},
@@ -14,15 +14,15 @@ use tokio_amqp::*;
 pub struct RabbitMQClient {
     queue: String,
     addr: String,
-    callback: F
+    callback: Callback,
 }
 
 impl RabbitMQClient {
-    pub fn new(addr: String, queue: String, callback_fn: F) -> Self {
+    pub fn new(addr: String, queue: String, callback_fn: Callback) -> Self {
         Self {
-            queue: queue,
-            addr: addr,
-            callback: callback_fn
+            queue,
+            addr,
+            callback: callback_fn,
         }
     }
 
@@ -86,9 +86,8 @@ impl RabbitMQClient {
                     Ok(v) => v,
                     Err(e) => panic!("Invalid UTF-8 sequence: {}", e),
                 };
-            
-                println!("result: {}", s);
-                &self.callback(s)
+
+                (self.callback)(s);
                 channel
                     .basic_ack(delivery.delivery_tag, BasicAckOptions::default())
                     .await?
